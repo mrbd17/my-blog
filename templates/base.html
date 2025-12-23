@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}My Blog Site{% endblock %}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/file.css' %}">
+</head>
+<body>
+
+    <!-- Navbar -->
+    {% include 'parts/navbar.html' %}
+
+    <!-- Content -->
+    <main>
+        {% block content %}
+        {% endblock content %}
+    </main>
+
+    <!-- Footer -->
+    {% include 'parts/footer.html' %}
+
+</body>
+</html>

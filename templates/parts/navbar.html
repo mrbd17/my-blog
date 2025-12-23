@@ -1,0 +1,62 @@
+<style>
+    .navbar {
+        background: #1e1e1e;
+        padding: 12px 20px;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .navbar a {
+        color: white;
+        text-decoration: none;
+        padding: 8px 14px;
+        border-radius: 6px;
+        transition: 0.3s;
+        font-size: 14px;
+    }
+
+    .navbar a:hover {
+        background: #333;
+    }
+
+    .logout-btn {
+        background: #e53935;
+        color: white;
+        border: none;
+        padding: 8px 14px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 14px;
+        transition: 0.3s;
+    }
+
+    .logout-btn:hover {
+        background: #c62828;
+    }
+
+    .logout-form {
+        margin: 0;
+    }
+</style>
+
+<nav class="navbar">
+    <a href="{% url 'home' %}">Home</a>
+
+    {% if user.is_authenticated %}
+        <a href="{% url 'postcreate' %}">Create Post</a>
+
+        <form method="POST" action="{% url 'logout' %}" onsubmit="return confirmLougout();" class="logout-form">
+            {% csrf_token %}
+            <button type="submit" class="logout-btn">Logout</button>
+        </form>
+        <script>
+            function  confirmLougout() {
+            return confirm("Are you sure you want to logout")}
+        </script>
+    {% else %}
+        <a href="{% url 'login' %}">Login</a>
+        <a href="{% url 'register' %}">Register</a>
+        
+    {% endif %}
+</nav>

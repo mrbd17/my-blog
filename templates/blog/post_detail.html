@@ -1,0 +1,48 @@
+<div style="max-width: 800px; margin: 0 auto; padding: 20px; border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+
+    <!-- Title + Buttons -->
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; gap: 10px;">
+        <h1 style="margin: 0;">{{ post.title }}</h1>
+
+        {% if request.user == post.author %}
+        <div style="display: flex; gap: 10px;">
+            <!-- Update Button -->
+            <a href="{% url 'update-post' post.id %}"
+               style="padding: 8px 14px; background-color: #4CAF50; color: white; text-decoration: none; border-radius: 6px; font-size: 14px;">
+                Update
+            </a>
+
+            <!-- Delete Button -->
+            <form method="POST" action="{% url 'delete-post' post.id %}" onsubmit="return confirmDelete();" style="margin: 0;">
+                {% csrf_token %}
+                <input type="submit" value="Delete"
+                       style="padding: 8px 14px; background-color: #f44336; color: white; border: none; border-radius: 6px; font-size: 14px; cursor: pointer;">
+            </form>
+            <script>
+                function confirmDelete() {
+                    return confirm("Are you sure you want to delete this post?")
+                }
+            </script>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- Subtitle -->
+    {% if post.subtitle %}
+        <h3 style="color: #555; margin-top: 0; margin-bottom: 15px;">
+            {{ post.subtitle }}
+        </h3>
+    {% endif %}
+
+    <!-- Image -->
+    {% if post.image %}
+        <img src="{{ post.image.url }}" alt="{{ post.title }}"
+             style="width: 100%; height: auto; border-radius: 6px; margin-bottom: 20px;">
+    {% endif %}
+
+    <!-- Content -->
+    <p style="line-height: 1.6; font-size: 16px; color: #333;">
+        {{ post.content }}
+    </p>
+    <a href="{% url 'add-comment' post.id %}" >🗨️Comment</a>
+</div>
